@@ -1,96 +1,95 @@
-let homeScore = 0;
-let guestScore = 0;
-document.getElementById("home-card").textContent = homeScore;
-document.getElementById("guest-card").textContent = guestScore;
-let one = document.getElementsByClassName("plus-one");
-let two = document.getElementsByClassName("plus-two");
-let three = document.getElementsByClassName("plus-three");
+const homeCard = document.querySelector('#home-card');
+const guestCard = document.querySelector('#guest-card');
+const plusOneButtons = document.querySelectorAll('.plus-one');
+const plusTwoButtons = document.querySelectorAll('.plus-two');
+const plusThreeButtons = document.querySelectorAll('.plus-three');
+const resetButton = document.querySelector('#reset');
 
-/* These for..in loops iterate through their respective ClassName arrays (by their index keys i.e 0 , 1, 2 ....) to assign each array object to a specified string */
-for (let elem in one) {
-    one[elem].textContent = "+1";
-};
+const allButtonsArray = [...plusOneButtons, ...plusTwoButtons, ...plusThreeButtons];
 
-for (let elem in two) {
-    two[elem].textContent = "+2";
-};
+let homeScore = null;
+let guestScore = null;
 
-for (let elem in three) {
-    three[elem].textContent = "+3";
-};
+for (const button of allButtonsArray.entries()) {
+	const [index, btnElement] = button;
 
+	const handleIncrement = () => {
+		switch (index) {
+			case 0: {
+				homeScore += 1;
+				homeCard.textContent = homeScore;
+				break;
+			}
 
-function addOneHome() {
-    homeScore += 1
-    document.getElementById("home-card").textContent = homeScore;
-    highlight();
-};
+			case 1:
+				guestScore += 1;
+				guestCard.textContent = guestScore;
+				break;
 
-function addTwoHome() {
-    homeScore += 2
-    document.getElementById("home-card").textContent = homeScore;
-    highlight();
-};
+			case 2:
+				homeScore += 2;
+				homeCard.textContent = homeScore;
+				break;
 
-function addThreeHome() {
-    homeScore += 3
-    document.getElementById("home-card").textContent = homeScore;
-    highlight();
-};
+			case 3:
+				guestScore += 2;
+				guestCard.textContent = guestScore;
+				break;
 
-function addOneGuest() {
-    guestScore += 1
-    document.getElementById("guest-card").textContent = guestScore;
-    highlight();
-};
+			case 4:
+				homeScore += 3;
+				homeCard.textContent = homeScore;
+				break;
 
-function addTwoGuest() {
-    guestScore += 2
-    document.getElementById("guest-card").textContent = guestScore;
-    highlight();
-};
+			case 5:
+				guestScore += 3;
+				guestCard.textContent = guestScore;
+				break;
 
-function addThreeGuest() {
-    guestScore += 3
-    document.getElementById("guest-card").textContent = guestScore;
-    highlight();
-};
+			default: {
+				console.log('Error!, case not accounted for');
+				break;
+			}
+		}
 
+		// if (index === 0) {
+		// 	homeScore += 1;
+		// 	homeCard.textContent = homeScore;
+		// }
 
-function reset() {
-    guestScore = 0
-    document.getElementById("guest-card").textContent = guestScore
-    homeScore = 0
-    document.getElementById("home-card").textContent = homeScore;
+		// if (index === 1) {
+		// 	guestScore += 1;
+		// 	guestCard.textContent = guestScore;
+		// }
 
-    let scoreCard = document.getElementById("home-card")
-    scoreCard.classList.remove("highlight")
+		// if (index === 2) {
+		// 	homeScore += 2;
+		// 	homeCard.textContent = homeScore;
+		// }
 
-    let scoreCard2 = document.getElementById("guest-card")
-    scoreCard2.classList.remove("highlight")
-};
+		// if (index === 3) {
+		// 	guestScore += 2;
+		// 	guestCard.textContent = guestScore;
+		// }
 
+		// if (index === 4) {
+		// 	homeScore += 3;
+		// 	homeCard.textContent = homeScore;
+		// }
 
-function highlight() {
-    if (homeScore > guestScore) {
-        let scoreCard = document.getElementById("home-card")
-        scoreCard.classList.add("highlight")
+		// if (index === 5) {
+		// 	guestScore += 3;
+		// 	guestCard.textContent = guestScore;
+		// }
+	};
 
-        let scoreCard2 = document.getElementById("guest-card")
-        scoreCard2.classList.remove("highlight")
-
-    } else if(homeScore === guestScore){
-        let scoreCard = document.getElementById("home-card")
-        scoreCard.classList.remove("highlight")
-
-        let scoreCard2 = document.getElementById("guest-card")
-        scoreCard2.classList.remove("highlight")
-        
-    } else {
-        let scoreCard2 = document.getElementById("guest-card")
-        scoreCard2.classList.add("highlight")
-
-        let scoreCard = document.getElementById("home-card")
-        scoreCard.classList.remove("highlight")
-    };
+	btnElement.addEventListener('click', handleIncrement);
 }
+
+resetButton.addEventListener('click', () => {
+	homeScore = 0;
+	homeCard.textContent = homeScore;
+
+	guestScore = 0;
+	guestCard.textContent = guestScore;
+});
