@@ -1,95 +1,87 @@
-const homeCard = document.querySelector('#home-card');
-const guestCard = document.querySelector('#guest-card');
-const plusOneButtons = document.querySelectorAll('.plus-one');
-const plusTwoButtons = document.querySelectorAll('.plus-two');
-const plusThreeButtons = document.querySelectorAll('.plus-three');
-const resetButton = document.querySelector('#reset');
+const homeScoreCard = document.querySelector("#home-card");
+const guestScoreCard = document.querySelector("#guest-card");
+const plusOneButtons = document.querySelectorAll(".plus-one");
+const plusTwoButtons = document.querySelectorAll(".plus-two");
+const plusThreeButtons = document.querySelectorAll(".plus-three");
+const resetButton = document.querySelector("#reset");
 
 const allButtonsArray = [...plusOneButtons, ...plusTwoButtons, ...plusThreeButtons];
 
-let homeScore = null;
-let guestScore = null;
+let homeScore, guestScore;
 
-for (const button of allButtonsArray.entries()) {
-	const [index, btnElement] = button;
+const handleHighLight = () => {
+	if (homeScore > guestScore) {
+		homeScoreCard.classList.add("highlight");
+		guestScoreCard.classList.remove("highlight");
+		return;
+	}
 
-	const handleIncrement = () => {
-		switch (index) {
-			case 0: {
-				homeScore += 1;
-				homeCard.textContent = homeScore;
-				break;
-			}
+	if (guestScore > homeScore) {
+		guestScoreCard.classList.add("highlight");
+		homeScoreCard.classList.remove("highlight");
+		return;
+	}
 
-			case 1:
-				guestScore += 1;
-				guestCard.textContent = guestScore;
-				break;
+	if (homeScore === guestScore) {
+		homeScoreCard.classList.add("highlight");
+		guestScoreCard.classList.add("highlight");
+		return;
+	}
+};
 
-			case 2:
-				homeScore += 2;
-				homeCard.textContent = homeScore;
-				break;
-
-			case 3:
-				guestScore += 2;
-				guestCard.textContent = guestScore;
-				break;
-
-			case 4:
-				homeScore += 3;
-				homeCard.textContent = homeScore;
-				break;
-
-			case 5:
-				guestScore += 3;
-				guestCard.textContent = guestScore;
-				break;
-
-			default: {
-				console.log('Error!, case not accounted for');
-				break;
-			}
+const handleIncrement = (index) => {
+	switch (index) {
+		case 0: {
+			homeScore += 1;
+			homeScoreCard.textContent = homeScore;
+			break;
 		}
 
-		// if (index === 0) {
-		// 	homeScore += 1;
-		// 	homeCard.textContent = homeScore;
-		// }
+		case 1:
+			guestScore += 1;
+			guestScoreCard.textContent = guestScore;
+			break;
 
-		// if (index === 1) {
-		// 	guestScore += 1;
-		// 	guestCard.textContent = guestScore;
-		// }
+		case 2:
+			homeScore += 2;
+			homeScoreCard.textContent = homeScore;
+			break;
 
-		// if (index === 2) {
-		// 	homeScore += 2;
-		// 	homeCard.textContent = homeScore;
-		// }
+		case 3:
+			guestScore += 2;
+			guestScoreCard.textContent = guestScore;
+			break;
 
-		// if (index === 3) {
-		// 	guestScore += 2;
-		// 	guestCard.textContent = guestScore;
-		// }
+		case 4:
+			homeScore += 3;
+			homeScoreCard.textContent = homeScore;
+			break;
 
-		// if (index === 4) {
-		// 	homeScore += 3;
-		// 	homeCard.textContent = homeScore;
-		// }
+		case 5:
+			guestScore += 3;
+			guestScoreCard.textContent = guestScore;
+			break;
 
-		// if (index === 5) {
-		// 	guestScore += 3;
-		// 	guestCard.textContent = guestScore;
-		// }
-	};
+		default: {
+			console.log("Error!, case not accounted for");
+			break;
+		}
+	}
 
-	btnElement.addEventListener('click', handleIncrement);
+	handleHighLight();
+};
+
+for (const [index, button] of allButtonsArray.entries()) {
+	button.addEventListener("click", () => handleIncrement(index));
 }
 
-resetButton.addEventListener('click', () => {
+resetButton.addEventListener("click", () => {
 	homeScore = 0;
-	homeCard.textContent = homeScore;
+	homeScoreCard.textContent = homeScore;
 
 	guestScore = 0;
-	guestCard.textContent = guestScore;
+	guestScoreCard.textContent = guestScore;
+
+	guestScoreCard.classList.remove("highlight");
+	homeScoreCard.classList.remove("highlight");
 });
