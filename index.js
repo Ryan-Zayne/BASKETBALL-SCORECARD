@@ -7,7 +7,8 @@ const resetButton = document.querySelector("#reset");
 
 const allButtonsArray = [...plusOneButtons, ...plusTwoButtons, ...plusThreeButtons];
 
-let homeScore, guestScore;
+let homeScore = 0,
+	guestScore = 0;
 
 const handleHighLight = () => {
 	if (homeScore > guestScore) {
